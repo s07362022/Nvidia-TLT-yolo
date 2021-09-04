@@ -1,0 +1,99 @@
+random_seed: 42
+yolo_config {
+  big_anchor_shape: "[(114.94, 60.67), (159.06, 114.59), (297.59, 176.38)]"
+  mid_anchor_shape: "[(42.99, 31.91), (79.57, 31.75), (56.80, 56.93)]"
+  small_anchor_shape: "[(15.60, 13.88), (30.25, 20.25), (20.67, 49.63)]"
+  matching_neutral_box_iou: 0.5
+
+  arch: "resnet"
+  nlayers: 18
+  arch_conv_blocks: 2
+
+  loss_loc_weight: 0.75
+  loss_neg_obj_weights: 200.0
+  loss_class_weights: 1.0
+
+  freeze_blocks: 0
+  freeze_bn: false
+}
+training_config {
+  batch_size_per_gpu: 16
+  num_epochs: 80
+  enable_qat: false
+  learning_rate {
+  soft_start_annealing_schedule {
+    min_learning_rate: 1e-6
+    max_learning_rate: 1e-4
+    soft_start: 0.1
+    annealing: 0.8
+    }
+  }
+  regularizer {
+    type: L1
+    weight: 5e-5
+  }
+}
+eval_config {
+  validation_period_during_training: 10
+  average_precision_mode: SAMPLE
+  batch_size: 16
+  matching_iou_threshold: 0.5
+}
+nms_config {
+  confidence_threshold: 0.01
+  clustering_iou_threshold: 0.6
+  top_k: 200
+}
+augmentation_config {
+  preprocessing {
+    output_image_width: 1248
+    output_image_height: 384
+    output_image_channel: 3
+    crop_right: 1248
+    crop_bottom: 384
+    min_bbox_width: 1.0
+    min_bbox_height: 1.0
+  }
+  spatial_augmentation {
+    hflip_probability: 0.5
+    vflip_probability: 0.0
+    zoom_min: 0.7
+    zoom_max: 1.8
+    translate_max_x: 8.0
+    translate_max_y: 8.0
+  }
+  color_augmentation {
+    hue_rotation_max: 25.0
+    saturation_shift_max: 0.20000000298
+    contrast_scale_max: 0.10000000149
+    contrast_center: 0.5
+  }
+}
+dataset_config {
+  data_sources: {
+    tfrecords_path: "/workspace/tlt-experiments/data/tfrecords/kitti_trainval/kitti_trainval*"
+    image_directory_path: "/workspace/tlt-experiments/data/training"
+  }
+  image_extension: "png"
+  target_class_mapping {
+      key: "car"
+      value: "car"
+  }
+  target_class_mapping {
+      key: "pedestrian"
+      value: "pedestrian"
+  }
+  target_class_mapping {
+      key: "cyclist"
+      value: "cyclist"
+  }
+  target_class_mapping {
+      key: "van"
+      value: "car"
+  }
+  target_class_mapping {
+      key: "person_sitting"
+      value: "pedestrian"
+  }
+validation_fold: 0
+}
