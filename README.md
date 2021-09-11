@@ -1,6 +1,6 @@
 # Nvidia-TLT-yolo
 
-CUDA install
+CUDA install; CUDA10.2
 -------------
 Update Note: When you install CUDA and get error, please use it.
 ```Bash
@@ -10,9 +10,9 @@ sudo apt-get autoclean
 sudo rm -rf /usr/local/cuda*
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
 sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
-sudo apt-key add /var/cuda-repo-ubuntu1804-11-4-local/7fa2af80.pub
+wget https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
+sudo apt-key add /var/cuda-repo-10-2-local-10.2.89-440.33.01/7fa2af80.pub
 sudo apt-get update
 sudo apt-get -y install cuda
 sudo reboot
@@ -36,8 +36,26 @@ sudo reboot
 ```
 eg : sudo apt install nvidia-driver-440 ; #for  RTX2060
 
+add cudnn 7.6.5
+---------
+download : https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.5.32/Production/10.2_20191118/cudnn-10.2-linux-x64-v7.6.5.32.tgz
 
+after unzip ; copy to cuda dir (include) , (lib), (bin)
 
+```Bash
+sudo cp  cuda/lib/* /usr/local/cuda/lib/ 
+sudo cp cuda/include/* /usr/local/cuda/include/
+sudo cp cuda/bin/* /usr/local/cuda/bin/
+```
+
+add cudnn path to env
+
+```Bash
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib:/usr/local/cuda/extras/CUPTI/lib"' >> ~/.bashrc
+echo 'export CUDA_HOME=/usr/local/cuda' >> ~/.bashrc
+echo 'export PATH="/usr/local/cuda/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
 
 
 Nvidia-TLT-v2.0_py3
