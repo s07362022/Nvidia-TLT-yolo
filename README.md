@@ -1,9 +1,49 @@
 # Nvidia-TLT-yolo
 
+CUDA install
+-------------
+Update Note: When you install CUDA and get error, please use it.
+```Bash
+sudo apt-get purge nvidia*
+sudo apt-get autoremove
+sudo apt-get autoclean
+sudo rm -rf /usr/local/cuda*
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu1804-11-4-local/7fa2af80.pub
+sudo apt-get update
+sudo apt-get -y install cuda
+sudo reboot
+```
+
+OR 
+
+using apt install
+-----------------
+
+first, search deviece version
+```Bash 
+sudo add-apt-repository ppa:graphics-drivers
+ubuntu-drivers list
+```
+
+Install Nvidia-driver
+```Bash
+sudo apt install nvidia-driver-<version>
+sudo reboot
+```
+eg : sudo apt install nvidia-driver-440 ; #for  RTX2060
+
+
+
+
+
 Nvidia-TLT-v2.0_py3
 ------------------
 ![nvidia-smi](https://i.ibb.co/f852NGV/Screenshot-from-2021-09-05-01-40-16.png)
-    Base Components		Version
+    **Base Components		Version
     Ubuntu 			18.04.2
     NVIDIA CUDA® 		10.2.89
     NVIDIA cuDNN 		7.6.5
@@ -16,6 +56,13 @@ Nvidia-TLT-v2.0_py3
 
 Step1 : Install Nvidia-Docker :
 ------------------------------
+
+Note : your local CUDA Version have to correspond Nvidia-docker CUDA Version.
+
+
+eg : like me, my local machiene is cuda10.2 , you have to install nvidia-docker cuda10.2
+
+
 *reference : [install nvidia-docker to ubuntu](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#installing-on-ubuntu-and-debian)
 ```Bash
 curl https://get.docker.com | sh \
