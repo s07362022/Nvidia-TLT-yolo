@@ -155,7 +155,7 @@ docker login nvcr.io
   you can get 
   Username : $ ....
   Password : ......
-  **(API Key)
+  (API Key)
 
 
 Step3 : download TLT 
