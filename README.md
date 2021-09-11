@@ -151,11 +151,11 @@ Logo in NGC :
 docker login nvcr.io
 ```
 
-  **right-up "Generate API Key"
+*right-up "Generate API Key"
   you can get 
   Username : $ ....
   Password : ......
-  (API Key)
+  (API Key)*
 
 
 Step3 : download TLT 
