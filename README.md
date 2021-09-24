@@ -277,3 +277,11 @@ print("To run with multigpu, please change --gpus based on the number of availab
 
 DONE!!!!!!!!!!!!!!!!!
 ----------------------
+
+   
+if meet root apt-get install erro:
+```bash
+   sudo rm /var/lib/dpkg/lock-frontend
+   sudo rm /var/lib/dpkg/lock
+   sudo rm /var/cache/apt/archives/lock
+   ````
